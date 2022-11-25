@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { createRoot } from "react-dom/client";
 import Axios from "axios";
+import CreateNewForm from "./components/CreateNewForm";
+import AnimalCard from "./components/AnimalCard";
+
 function App() {
   const [animals, setAnimals] = useState([]);
   useEffect(() => {
@@ -11,25 +14,26 @@ function App() {
     start();
   }, []);
   return (
-    <div>
-      <h1>Hello</h1>
-      <p>From React</p>
-      {animals.map((animal) => (
-        <AnimalCard
-          name={animal.name}
-          species={animal.species}
-          key={animal._id}
-        ></AnimalCard>
-      ))}
+    <div className="container">
+      <p>
+        <a href="/">&laquo;Back to public homepage</a>
+      </p>
+      <CreateNewForm setAnimals={setAnimals} />
+      <div className="animal-grid">
+        {animals.map((animal) => (
+          <AnimalCard
+            name={animal.name}
+            species={animal.species}
+            key={animal._id}
+            photo={animal.photo}
+            id={animal._id}
+            setAnimals={setAnimals}
+          ></AnimalCard>
+        ))}
+      </div>
     </div>
   );
 }
-function AnimalCard(props) {
-  return (
-    <p>
-      Hi,My Name is {props.name} and I'm {props.species}
-    </p>
-  );
-}
+
 const root = createRoot(document.querySelector("#app"));
 root.render(<App />);
