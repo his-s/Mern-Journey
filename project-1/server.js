@@ -5,13 +5,14 @@ let db;
 const app = express();
 app.set("view engine", "ejs");
 app.set("views", "./views");
+app.use(express.static("public"));
 app.get("/", async (req, res) => {
     const allAnimals = await db.collection("animals").find().toArray();
 
     res.render("home", { allAnimals });
 });
 app.get("/admin", (req, res) => {
-    res.send("This is the top secret admin page");
+    res.render("admin");
 });
 const PORT = 3000;
 async function start() {
